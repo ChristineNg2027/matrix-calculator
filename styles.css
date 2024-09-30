@@ -1,0 +1,22 @@
+#matrix-input{
+    display: flex;
+    justify-content: center;
+    gap:20px;
+    padding: 20px;
+}
+
+#matrix-A{
+    display: grid;
+    grid-template-columns: var(--columns, auto);
+    grid-template-rows: var(--rows, auto);
+    gap: 5px;
+    padding: 5px;
+}
+
+#matrix-B{
+    display: grid;
+    grid-template-columns: var(--columns, auto);
+    grid-template-rows: var(--rows, auto);
+    gap: 5px;
+    padding: 5px;
+}

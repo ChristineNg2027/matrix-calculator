@@ -1,0 +1,62 @@
+<!--
+    Project: Matrix Calculator
+    Author: Christine Ng
+    Created: September 28, 2024
+    Description: This HTML file represents the main landing page of teh matrix calculator.
+-->
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Matrix Calculator</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <div id="container">
+            <div id="dimension-input">
+                <p>Please Enter the dimension of the two matrices</p>
+                <span style="display: inline-flex; ">
+                    <h5>Matrix A: </h5>
+                    <input type="number" step="1" id="row-a">
+                    <h6> x </h6>
+                    <input type="number" step="1" id="col-a">
+                    <h5>Matrix B:</h5>
+                    <input type="number" step="1" id="row-b">
+                    <h6> x </h6>
+                    <input type="number" step="1" id="col-b">
+                </span>
+            </div>
+
+            <hr>
+
+            <div id="matrix-input">
+                <div id="matrix-A"></div>
+
+                <div id="matrix-B"></div>
+            </div>
+
+            <div id="operators">
+                <button onclick="dimension()">Confirm Dimension</button>
+                <button onclick="setUp()">Confirm</button>
+                <button onclick="addition()">+</button>
+                <button onclick="subtraction()">-</button>
+                <!-- <button onclick="multiplication()">*</button>
+                <button onclick="determinants()">Determinants</button>
+                <button onclick="echelon()">Echelon</button>
+                <button onclick="reduceEchelone()">Reduced Echelon</button> -->
+                <button onclick="clearMatrix()">Clear</button>
+            </div>
+
+            <p id="a-11"></p>
+            <p id="arr-A"></p>
+            <p id="arr-B"></p>
+            <p id="end"></p>
+        </div>
+    </body>
+
+    <script src="script.js"></script>
+</html>
