@@ -127,6 +127,23 @@ function subtraction(){
     document.getElementById("end").innerHTML = arrResult;
 }
 
+function multiplication(){
+    const arrResult = [];
+    for (let rowA = 0; rowA < arrA.length; rowA++) {
+        arrResult[rowA] = [];
+        for (let colB = 0; colB < arrB[0].length; colB++) {
+            arrResult[rowA][colB] = 0; 
+            for (let colA = 0; colA < arrA[0].length; colA++) {
+                arrResult[rowA][colB] += arrA[rowA][colA] * arrB[colA][colB];
+            }
+        }
+    }
+    document.getElementById("arr-A").innerHTML = arrA;
+    document.getElementById("arr-B").innerHTML = arrB;
+    document.getElementById("end").innerHTML = arrResult;
+
+}
+
 /**
  * Clears the matrices for next round of calculation
  */
