@@ -8,23 +8,35 @@
 
 
 /**
- * Asks client for the dimension of the matrices they would like to perform operation on.
- * @throws {TypeError} If the input is not a positive integer.
+ * Asks client for the dimension of the two matrices they would like to perform operations on.
+ * The dimension of a matrix must be positive integers.
+ */
+document.getElementById("dimension-input").addEventListener("submit", (event)=> {
+        event.preventDefault();
+        rowA = parseFloat(document.getElementById("row-a").value);
+        rowB = parseFloat(document.getElementById("row-b").value);
+        colA = parseFloat(document.getElementById("col-a").value);
+        colB = parseFloat(document.getElementById("col-b").value);
+
+        if(!(Number.isInteger(rowA) && Number.isInteger(rowB) && 
+                Number.isInteger(colA) && Number.isInteger(colB)
+                && rowA > 0 && rowB > 0 && colA > 0 && colB > 0)){
+            window.alert("Dimensions of matrices must be positive integers");
+            document.getElementById("error-message").textContent = 
+                "Dimensions of matrices must be positive integers";
+        } else {
+            document.getElementById("error-message").textContent = "";
+            dimension();
+        }
+    }  
+);
+
+/**
+ * Set up the dimension of the matrices they would like to perform operation on.
  */
 function dimension(){
     containerA = document.getElementById("matrix-A");
     containerB = document.getElementById("matrix-B");
-    rowA = parseInt(document.getElementById("row-a").value);
-    rowB = parseInt(document.getElementById("row-b").value);
-    colA = parseInt(document.getElementById("col-a").value);
-    colB = parseInt(document.getElementById("col-b").value);
-    
-    if(!(Number.isInteger(rowA) && Number.isInteger(rowB) && 
-            Number.isInteger(colA) && Number.isInteger(colB)
-            && rowA > 0 && rowB > 0 && colA > 0 && colB > 0)){
-        window.alert("Dimensions of matrices must be positive integers");
-        throw new TypeError("Dimensions of matrices must be positive integers");
-    }
 
     containerA.style.setProperty("--columns", "repeat(" + colA + ", 1fr)");
     containerA.style.setProperty("--rows", "repeat(" + rowA + ", 1fr)");
@@ -82,6 +94,7 @@ function setUp(){
 function addition(){
     if(arrA.length === 0 || arrB.length === 0){
         alert("Matrices can't be empty");
+        throw new TypeError("Dimensions of matrices must be positive integers");
     }
 
     if(rowA != rowB || colA != colB){
@@ -96,9 +109,10 @@ function addition(){
             arrResult[i][j] = arrA[i][j] + arrB[i][j];
         }
     }
+
     document.getElementById("arr-A").innerHTML = arrA;
     document.getElementById("arr-B").innerHTML = arrB;
-    document.getElementById("end").innerHTML = arrResult;
+    document.getElementById("end").innerHTML = formatMatrixDisplay(arrResult);
 }
 
 /**
@@ -122,9 +136,10 @@ function subtraction(){
             arrResult[i][j] = arrA[i][j] - arrB[i][j];
         }
     }
+
     document.getElementById("arr-A").innerHTML = arrA;
     document.getElementById("arr-B").innerHTML = arrB;
-    document.getElementById("end").innerHTML = arrResult;
+    document.getElementById("end").innerHTML = formatMatrixDisplay(arrResult);
 }
 
 function multiplication(){
@@ -138,10 +153,14 @@ function multiplication(){
             }
         }
     }
+
     document.getElementById("arr-A").innerHTML = arrA;
     document.getElementById("arr-B").innerHTML = arrB;
-    document.getElementById("end").innerHTML = arrResult;
+    document.getElementById("end").innerHTML = formatMatrixDisplay(arrResult);
+}
 
+function formatMatrixDisplay(arr){
+    return arr.map(row => row.join(', ')).join('<br>');
 }
 
 /**

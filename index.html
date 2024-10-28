@@ -18,8 +18,29 @@
     <body>
         <div id="container">
             <div id="dimension-input">
-                <p>Please Enter the dimension of the two matrices</p>
-                <span style="display: inline-flex; ">
+                <p id="error-message" style="font-weight:bold"></p>
+                <form style="display: inline-flex" id="dimension-input">
+                    <p>Please Enter the dimension of the two matrices</p>
+                    <fieldset>
+                        <legend>Matrix A Dimensions</legend>
+                        <label for="row-a">Rows:</label>
+                        <input type="number" id="row-a" min="1" step="1" required>
+                        <label for="col-a">Columns:</label>
+                        <input type="number" id="col-a" min="1" step="1" required>
+                    </fieldset>
+                    
+                    <fieldset>
+                        <legend>Matrix B Dimensions</legend>
+                        <label for="row-b">Rows:</label>
+                        <input type="number" id="row-b" min="1" step="1" required>
+                        <label for="col-b">Columns:</label>
+                        <input type="number" id="col-b" min="1" step="1" required>
+                    </fieldset>
+
+                    <button type="submit">Confirm Dimension</button>
+                </form>
+
+                <!-- <span style="display: inline-flex; ">
                     <h5>Matrix A: </h5>
                     <input type="number" step="1" id="row-a">
                     <h6> x </h6>
@@ -28,7 +49,7 @@
                     <input type="number" step="1" id="row-b">
                     <h6> x </h6>
                     <input type="number" step="1" id="col-b">
-                </span>
+                </span> -->
             </div>
 
             <hr>
@@ -40,7 +61,7 @@
             </div>
 
             <div id="operators">
-                <button onclick="dimension()">Confirm Dimension</button>
+                <!-- <button onclick="checkDimensionInput()">Confirm Dimension</button> -->
                 <button onclick="setUp()">Confirm</button>
                 <button onclick="addition()">+</button>
                 <button onclick="subtraction()">-</button>
