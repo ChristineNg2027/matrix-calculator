@@ -26,6 +26,7 @@ document.getElementById("dimension-input").addEventListener("submit", (event)=> 
                 "Dimensions of matrices must be positive integers";
         } else {
             document.getElementById("error-message").textContent = "";
+            document.getElementById("confirm-dimension").style.display = "none";
             dimension();
         }
     }  
@@ -85,6 +86,11 @@ function setUp(){
     }    
     document.getElementById("arr-A").innerHTML = arrA;
     document.getElementById("arr-B").innerHTML = arrB;
+}
+
+function changeDimension(){
+    document.getElementById("confirm-dimension").style.display = "inline";
+    clearMatrix()
 }
 
 /**
@@ -172,4 +178,5 @@ function clearMatrix(){
     document.querySelectorAll("input").forEach(input => input.value = "");
     document.getElementById("arr-A").innerHTML = arrA;
     document.getElementById("arr-B").innerHTML = arrB;
+    document.getElementById("confirm-dimension").style.display = "inline";
 }
