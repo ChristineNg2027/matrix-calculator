@@ -11,6 +11,10 @@
  * Asks client for the dimension of the two matrices they would like to perform operations on.
  * The dimension of a matrix must be positive integers.
  */
+
+arrA = [];
+arrB = [];
+
 document.getElementById("dimension-input").addEventListener("submit", (event)=> {
         event.preventDefault();
         rowA = parseFloat(document.getElementById("row-a").value);
@@ -36,6 +40,8 @@ document.getElementById("dimension-input").addEventListener("submit", (event)=> 
  * Set up the dimension of the matrices they would like to perform operation on.
  */
 function dimension(){
+    document.getElementById("matrix-A").innerHTML = "";
+    document.getElementById("matrix-B").innerHTML = "";
     containerA = document.getElementById("matrix-A");
     containerB = document.getElementById("matrix-B");
 
@@ -68,8 +74,7 @@ function dimension(){
  * Sets up the matrices by using data input by client in each cell of the matrices.
  */
 function setUp(){
-    arrA = [];
-    arrB = [];
+    
     
     for(let i = 1; i <= rowA; i++){
         arrA.push([]);
@@ -84,13 +89,13 @@ function setUp(){
             arrB[i - 1][j - 1] = parseFloat(document.getElementById("b" + i + j).value);
         }
     }    
-    document.getElementById("arr-A").innerHTML = arrA;
-    document.getElementById("arr-B").innerHTML = arrB;
+    document.getElementById("arr-A").innerHTML = `Matrix A: <br>${formatMatrixDisplay(arrA)}`;
+    document.getElementById("arr-B").innerHTML = `Matrix B: <br>${formatMatrixDisplay(arrB)}`;
 }
 
 function changeDimension(){
     document.getElementById("confirm-dimension").style.display = "inline";
-    clearMatrix()
+    clearMatrix();
 }
 
 /**
@@ -116,9 +121,9 @@ function addition(){
         }
     }
 
-    document.getElementById("arr-A").innerHTML = arrA;
-    document.getElementById("arr-B").innerHTML = arrB;
-    document.getElementById("end").innerHTML = formatMatrixDisplay(arrResult);
+    document.getElementById("arr-A").innerHTML = `Matrix A: <br>${formatMatrixDisplay(arrA)}`;
+    document.getElementById("arr-B").innerHTML = `Matrix B: <br>${formatMatrixDisplay(arrB)}`;
+    document.getElementById("end").innerHTML = `Result Matrix: <br>${formatMatrixDisplay(arrResult)}`;
 }
 
 /**
@@ -143,9 +148,9 @@ function subtraction(){
         }
     }
 
-    document.getElementById("arr-A").innerHTML = arrA;
-    document.getElementById("arr-B").innerHTML = arrB;
-    document.getElementById("end").innerHTML = formatMatrixDisplay(arrResult);
+    document.getElementById("arr-A").innerHTML = `Matrix A: <br>${formatMatrixDisplay(arrA)}`;
+    document.getElementById("arr-B").innerHTML = `Matrix B: <br>${formatMatrixDisplay(arrB)}`;
+    document.getElementById("end").innerHTML = `Result Matrix: <br>${formatMatrixDisplay(arrResult)}`;
 }
 
 function multiplication(){
@@ -160,9 +165,9 @@ function multiplication(){
         }
     }
 
-    document.getElementById("arr-A").innerHTML = arrA;
-    document.getElementById("arr-B").innerHTML = arrB;
-    document.getElementById("end").innerHTML = formatMatrixDisplay(arrResult);
+    document.getElementById("arr-A").innerHTML = `Matrix A: <br>${formatMatrixDisplay(arrA)}`;
+    document.getElementById("arr-B").innerHTML = `Matrix B: <br>${formatMatrixDisplay(arrB)}`;
+    document.getElementById("end").innerHTML = `Result Matrix: <br>${formatMatrixDisplay(arrResult)}`;
 }
 
 function formatMatrixDisplay(arr){
@@ -178,5 +183,6 @@ function clearMatrix(){
     document.querySelectorAll("input").forEach(input => input.value = "");
     document.getElementById("arr-A").innerHTML = arrA;
     document.getElementById("arr-B").innerHTML = arrB;
-    document.getElementById("confirm-dimension").style.display = "inline";
+    document.getElementById("end").innerHTML = "";
+    // document.getElementById("confirm-dimension").style.display = "inline";
 }
