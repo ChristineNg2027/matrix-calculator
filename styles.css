@@ -24,3 +24,9 @@
 #load-result{
     display: none;
 }
+
+#single-matrix-operations{
+    display: flex;
+    gap:20px;
+    padding: 20px;
+}

@@ -74,8 +74,6 @@ function dimension(){
  * Sets up the matrices by using data input by client in each cell of the matrices.
  */
 function setUp(){
-    
-    
     for(let i = 1; i <= rowA; i++){
         arrA.push([]);
         for(let j = 1; j <= colA; j++){
@@ -103,27 +101,32 @@ function changeDimension(){
  * @throws {Error} If one of the matrices are empty or the two matrices have different dimensions
  */
 function addition(){
-    if(arrA.length === 0 || arrB.length === 0){
+    if(arrA == undefined || arrB == undefined){
+        if(rowA === rowB || colA === colB){
+            const arrResult = [];
+            for(let i = 0; i < rowA; i++){
+                arrResult.push([]);
+                for(let j = 0; j < colA; j++){
+                    arrResult[i][j] = arrA[i][j] + arrB[i][j];
+                }
+            }
+        
+            updateMatrixDisplay("arr-A", "A", arrA);
+            updateMatrixDisplay("arr-B", "B", arrB);
+            updateMatrixDisplay("arr-result", "Result", arrResult);
+            document.getElementById("load-result").style.display = "inline";
+            loadResult(arrResult);
+        } else{
+            alert("Matrices have to be in same dimension. Please change the dimension of matrix");
+            changeDimension();
+        } 
+    } else {
         alert("Matrices can't be empty");
-        throw new TypeError("Dimensions of matrices must be positive integers");
-    }
 
-    if(rowA != rowB || colA != colB){
-        alert("Matrices have to be in same dimension");
-        throw new Error("Matrices have to be in same dimension");
-    }
-
-    const arrResult = [];
-    for(let i = 0; i < rowA; i++){
-        arrResult.push([]);
-        for(let j = 0; j < colA; j++){
-            arrResult[i][j] = arrA[i][j] + arrB[i][j];
-        }
-    }
-
-    document.getElementById("arr-A").innerHTML = `Matrix A: <br>${formatMatrixDisplay(arrA)}`;
-    document.getElementById("arr-B").innerHTML = `Matrix B: <br>${formatMatrixDisplay(arrB)}`;
-    document.getElementById("end").innerHTML = `Result Matrix: <br>${formatMatrixDisplay(arrResult)}`;
+        //
+        console.log("A: " + arrA);
+        console.log("B: " + arrB);
+    }  
 }
 
 /**
@@ -132,7 +135,7 @@ function addition(){
  */
 function subtraction(){
     if(arrA.length == 0 || arrB.length == 0){
-        alert("Matrix can't be empty");
+        window.alert("Matrix can't be empty");
     }
 
     if(rowA != rowB || colA != colB){
@@ -148,9 +151,10 @@ function subtraction(){
         }
     }
 
-    document.getElementById("arr-A").innerHTML = `Matrix A: <br>${formatMatrixDisplay(arrA)}`;
-    document.getElementById("arr-B").innerHTML = `Matrix B: <br>${formatMatrixDisplay(arrB)}`;
-    document.getElementById("end").innerHTML = `Result Matrix: <br>${formatMatrixDisplay(arrResult)}`;
+    updateMatrixDisplay("arr-A", "A", arrA);
+    updateMatrixDisplay("arr-B", "B", arrB);
+    updateMatrixDisplay("arr-result", "Result", arrResult);
+    document.getElementById("load-result").style.display = "inline";
 }
 
 function multiplication(){
@@ -165,13 +169,33 @@ function multiplication(){
         }
     }
 
-    document.getElementById("arr-A").innerHTML = `Matrix A: <br>${formatMatrixDisplay(arrA)}`;
-    document.getElementById("arr-B").innerHTML = `Matrix B: <br>${formatMatrixDisplay(arrB)}`;
-    document.getElementById("end").innerHTML = `Result Matrix: <br>${formatMatrixDisplay(arrResult)}`;
+    updateMatrixDisplay("arr-A", "A", arrA);
+    updateMatrixDisplay("arr-B", "B", arrB);
+    updateMatrixDisplay("arr-result", "Result", arrResult);
+    document.getElementById("load-result").style.display = "inline";
 }
+
+
 
 function formatMatrixDisplay(arr){
     return arr.map(row => row.join(', ')).join('<br>');
+}
+
+function updateMatrixDisplay(id, name, arr){
+    document.getElementById(id).innerHTML = `Matrix ${name}: <br>${formatMatrixDisplay(arr)}`;
+}
+
+function loadResult(result){
+    document.getElementById("load-result").addEventListener("click", (event) => {
+        const buttonClicked = event.target;
+        console.log(buttonClicked.getAttribute('id'));
+
+        buttonClicked.getAttribute('id') == 'rslt-into-A'? arrA = result : arrB = result;
+
+        updateMatrixDisplay("arr-A", "A", arrA);
+        updateMatrixDisplay("arr-B", "B", arrB);
+        updateMatrixDisplay("arr-result", "Result", result);
+    })
 }
 
 /**
@@ -183,6 +207,7 @@ function clearMatrix(){
     document.querySelectorAll("input").forEach(input => input.value = "");
     document.getElementById("arr-A").innerHTML = arrA;
     document.getElementById("arr-B").innerHTML = arrB;
-    document.getElementById("end").innerHTML = "";
+    document.getElementById("arr-result").innerHTML = "";
+    document.getElementById("load-result").style.display = "none";
     // document.getElementById("confirm-dimension").style.display = "inline";
 }
