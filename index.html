@@ -39,17 +39,6 @@
 
                     <button type="submit" id="confirm-dimension">Confirm Dimension</button>
                 </form>
-
-                <!-- <span style="display: inline-flex; ">
-                    <h5>Matrix A: </h5>
-                    <input type="number" step="1" id="row-a">
-                    <h6> x </h6>
-                    <input type="number" step="1" id="col-a">
-                    <h5>Matrix B:</h5>
-                    <input type="number" step="1" id="row-b">
-                    <h6> x </h6>
-                    <input type="number" step="1" id="col-b">
-                </span> -->
             </div>
 
             <hr>
@@ -68,12 +57,24 @@
                 <button onclick="multiplication()">x</button>
                 <!-- <button onclick="transpose()">Transpose</button> -->
                  <!-- <button onclick="determinants()">Determinants</button> -->
-                <!-- <button onclick="echelon()">Echelon</button>
-                <button onclick="reduceEchelone()">Reduced Echelon</button> -->
+                <button onclick="echelone()">Echelon</button>
+                <button onclick="reduceEchelone()">Reduced Echelon</button>
                 <button onclick="changeDimension()">Change Dimension</button>
                 <button onclick="clearMatrix()">Clear</button>
                 <br>
-                
+                <div id="single-matrix-operations">
+                    <div id="inverse" style="border: 1px solid black; padding: 10px;">
+                        <p>Inverse</p>
+                        <button onclick="inverseMatrix('A')">A</button>
+                        <button onclick="inverseMatrix('B')">B</button>
+                    </div>
+    
+                    <div style="border: 1px solid black; padding: 10px;">
+                        <p>Transpose</p>
+                        <button onclick="transpose('A')">A</button>
+                        <button onclick="transpose('B')">B</button>
+                    </div>
+                </div>
                 
             </div>
 

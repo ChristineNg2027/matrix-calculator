@@ -40,8 +40,6 @@ document.getElementById("dimension-input").addEventListener("submit", (event)=> 
  * Set up the dimension of the matrices they would like to perform operation on.
  */
 function dimension(){
-    document.getElementById("matrix-A").innerHTML = "";
-    document.getElementById("matrix-B").innerHTML = "";
     containerA = document.getElementById("matrix-A");
     containerB = document.getElementById("matrix-B");
 
@@ -98,58 +96,49 @@ function changeDimension(){
 
 /**
  * Performs matrix addition
- * @throws {Error} If one of the matrices are empty or the two matrices have different dimensions
  */
 function addition(){
-    if(arrA == undefined || arrB == undefined){
-        if(rowA === rowB || colA === colB){
-            const arrResult = [];
-            for(let i = 0; i < rowA; i++){
-                arrResult.push([]);
-                for(let j = 0; j < colA; j++){
-                    arrResult[i][j] = arrA[i][j] + arrB[i][j];
-                }
-            }
-        
-            updateMatrixDisplay("arr-A", "A", arrA);
-            updateMatrixDisplay("arr-B", "B", arrB);
-            updateMatrixDisplay("arr-result", "Result", arrResult);
-            document.getElementById("load-result").style.display = "inline";
-            loadResult(arrResult);
-        } else{
-            alert("Matrices have to be in same dimension. Please change the dimension of matrix");
-            changeDimension();
-        } 
-    } else {
+    if (arrA.length === 0 || arrB.length === 0) {
         alert("Matrices can't be empty");
+        return;
+    }
 
-        //
-        console.log("A: " + arrA);
-        console.log("B: " + arrB);
-    }  
+    if (rowA !== rowB || colA !== colB) {
+        alert("Matrices must have the same dimensions. Please change the dimension of matrices.");
+        changeDimension();
+        return;
+    }
+
+    let arrResult = arrA.map((rowArr, row) =>
+        rowArr.map((element, col) => element + arrB[row][col])
+    );
+
+    updateMatrixDisplay("arr-A", "A", arrA);
+    updateMatrixDisplay("arr-B", "B", arrB);
+    updateMatrixDisplay("arr-result", "Result", arrResult);
+    document.getElementById("load-result").style.display = "inline";
+    loadResult(arrResult);
 }
+
 
 /**
  * Performs matrix subtraction
  * @throws {Error} If one of the matrices are empty or the two matrices have different dimensions
  */
 function subtraction(){
-    if(arrA.length == 0 || arrB.length == 0){
-        window.alert("Matrix can't be empty");
+    if (arrA.length === 0 || arrB.length === 0) {
+        window.alert("Matrices can't be empty");
+        return;
     }
 
-    if(rowA != rowB || colA != colB){
-        alert("Matrices have to be in same dimension");
-        throw new Error("Matrices have to be in same dimension");
+    if (rowA !== rowB || colA !== colB) {
+        alert("Matrices must have the same dimensions.");
+        throw new Error("Matrices must have the same dimensions");
     }
 
-    const arrResult = [];
-    for(let i = 0; i < rowB; i++){
-        arrResult.push([]);
-        for(let j = 0; j < colB; j++){
-            arrResult[i][j] = arrA[i][j] - arrB[i][j];
-        }
-    }
+    let arrResult = arrA.map((rowArr, row) =>
+        rowArr.map((element, col) => element - arrB[row][col])
+    );
 
     updateMatrixDisplay("arr-A", "A", arrA);
     updateMatrixDisplay("arr-B", "B", arrB);
@@ -175,7 +164,41 @@ function multiplication(){
     document.getElementById("load-result").style.display = "inline";
 }
 
+/**
+ * Converts a matrix to its echelon form
+ */
+function echelon(matrix) {
+    let numRows = matrix.length;
+    let numCols = matrix[0].length;
+    let lead = 0;
 
+    for (let row = 0; r < numRows; row++) {
+        if (lead >= numCols) return matrix;
+        let i = row;
+        while (matrix[i][lead] === 0) {
+            i++;
+            if (i === numRows) {
+                i = row;
+                lead++;
+                if (lead === numCols) return matrix;
+            }
+        }
+
+        [matrix[i], matrix[row]] = [matrix[row], matrix[i]];
+
+        let lv = matrix[row][lead];
+        matrix[row] = matrix[row].map(val => val / lv);
+
+        for (let i = 0; i < numRows; i++) {
+            if (i !== row) {
+                let lv = matrix[i][lead];
+                matrix[i] = matrix[i].map((val, idx) => val - lv * matrix[row][idx]);
+            }
+        }
+        lead++;
+    }
+    return matrix;
+}
 
 function formatMatrixDisplay(arr){
     return arr.map(row => row.join(', ')).join('<br>');
