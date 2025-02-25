@@ -49,20 +49,26 @@
                 <div id="matrix-B"></div>
             </div>
 
+            <button id="set-up" style="display: none;" onclick="setUp()">Confirm</button>
+
             <div id="operators">
                 <!-- <button onclick="checkDimensionInput()">Confirm Dimension</button> -->
-                <button onclick="setUp()">Confirm</button>
                 <button onclick="addition()">+</button>
                 <button onclick="subtraction()">-</button>
                 <button onclick="multiplication()">x</button>
                 <!-- <button onclick="transpose()">Transpose</button> -->
                  <!-- <button onclick="determinants()">Determinants</button> -->
-                <button onclick="echelone()">Echelon</button>
                 <button onclick="reduceEchelone()">Reduced Echelon</button>
                 <button onclick="changeDimension()">Change Dimension</button>
                 <button onclick="clearMatrix()">Clear</button>
                 <br>
                 <div id="single-matrix-operations">
+                    <div id="echelon" style="border: 1px solid black; padding: 10px;">
+                        <p>echelon</p>
+                        <button onclick="echelon('A')">A</button>
+                        <button onclick="echelon('B')">B</button>
+                    </div>
+                
                     <div id="inverse" style="border: 1px solid black; padding: 10px;">
                         <p>Inverse</p>
                         <button onclick="inverseMatrix('A')">A</button>

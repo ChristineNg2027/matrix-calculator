@@ -65,7 +65,7 @@ function dimension(){
             containerB.appendChild(input);
         }
     }
-
+    document.getElementById("set-up").style.display = "inline";
 }
 
 /**
@@ -87,6 +87,7 @@ function setUp(){
     }    
     document.getElementById("arr-A").innerHTML = `Matrix A: <br>${formatMatrixDisplay(arrA)}`;
     document.getElementById("arr-B").innerHTML = `Matrix B: <br>${formatMatrixDisplay(arrB)}`;
+    document.getElementById("operators").style.display = "inline";
 }
 
 function changeDimension(){
@@ -112,12 +113,7 @@ function addition(){
     let arrResult = arrA.map((rowArr, row) =>
         rowArr.map((element, col) => element + arrB[row][col])
     );
-
-    updateMatrixDisplay("arr-A", "A", arrA);
-    updateMatrixDisplay("arr-B", "B", arrB);
-    updateMatrixDisplay("arr-result", "Result", arrResult);
-    document.getElementById("load-result").style.display = "inline";
-    loadResult(arrResult);
+    displayResult(arrResult);
 }
 
 
@@ -140,10 +136,7 @@ function subtraction(){
         rowArr.map((element, col) => element - arrB[row][col])
     );
 
-    updateMatrixDisplay("arr-A", "A", arrA);
-    updateMatrixDisplay("arr-B", "B", arrB);
-    updateMatrixDisplay("arr-result", "Result", arrResult);
-    document.getElementById("load-result").style.display = "inline";
+    displayResult(arrResult);
 }
 
 function multiplication(){
@@ -158,46 +151,53 @@ function multiplication(){
         }
     }
 
-    updateMatrixDisplay("arr-A", "A", arrA);
-    updateMatrixDisplay("arr-B", "B", arrB);
-    updateMatrixDisplay("arr-result", "Result", arrResult);
-    document.getElementById("load-result").style.display = "inline";
+    displayResult(arrResult);
 }
 
 /**
  * Converts a matrix to its echelon form
  */
-function echelon(matrix) {
-    let numRows = matrix.length;
-    let numCols = matrix[0].length;
-    let lead = 0;
+function echelon(matrixIndex) {
+    arrResult = matrixIndex == 'A'? arrA : arrB;
+    console.log(arrA);
+    console.log(arrB);
+    let numRows = arrResult.length;
+    let numCols = arrResult[0].length;
+    let pivot = 0;
 
-    for (let row = 0; r < numRows; row++) {
-        if (lead >= numCols) return matrix;
+    for (let row = 0; row < numRows; row++) {
+        if (pivot >= numCols){
+            displayResult(arrResult);
+            return;
+        } 
+
         let i = row;
-        while (matrix[i][lead] === 0) {
+        while (arrResult[i][pivot] == 0) {
             i++;
-            if (i === numRows) {
+            if (i == numRows) {
                 i = row;
-                lead++;
-                if (lead === numCols) return matrix;
+                pivot++;
+                if (pivot == numCols){
+                    displayResult(arrResult);
+                    return;
+                };
             }
         }
 
-        [matrix[i], matrix[row]] = [matrix[row], matrix[i]];
+        [arrResult[i], arrResult[row]] = [arrResult[row], arrResult[i]];
 
-        let lv = matrix[row][lead];
-        matrix[row] = matrix[row].map(val => val / lv);
+        let pivotValue = arrResult[row][pivot];
+        arrResult[row] = arrResult[row].map(val => val / pivotValue);
 
         for (let i = 0; i < numRows; i++) {
             if (i !== row) {
-                let lv = matrix[i][lead];
-                matrix[i] = matrix[i].map((val, idx) => val - lv * matrix[row][idx]);
+                let pivotValue = arrResult[i][pivot];
+                arrResult[i] = arrResult[i].map((val, idx) => val - pivotValue * arrResult[row][idx]);
             }
         }
-        lead++;
+        pivot++;
     }
-    return matrix;
+    displayResult(arrResult);
 }
 
 function formatMatrixDisplay(arr){
@@ -206,6 +206,14 @@ function formatMatrixDisplay(arr){
 
 function updateMatrixDisplay(id, name, arr){
     document.getElementById(id).innerHTML = `Matrix ${name}: <br>${formatMatrixDisplay(arr)}`;
+}
+
+function displayResult(arrResult){
+    updateMatrixDisplay("arr-A", "A", arrA);
+    updateMatrixDisplay("arr-B", "B", arrB);
+    updateMatrixDisplay("arr-result", "Result", arrResult);
+    document.getElementById("load-result").style.display = "inline";
+    loadResult(arrResult);
 }
 
 function loadResult(result){
